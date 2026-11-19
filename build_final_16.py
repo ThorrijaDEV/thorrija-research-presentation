@@ -1264,7 +1264,7 @@ def draw_slide_16(r):
     # Links — below QR
     links = ["github.com/ThorrijaDEV", "thorrijadev.github.io/showcase",
              "thorrija.contact@gmail.com"]
-    y = qr_y + qr_size + 30
+    y = qr_y + qr_size + 40
     r.c.setFont(MONO_FAMILY, 11); r.c.setFillColor(INK)
     for link in links:
         r.c.drawString(rx, y, link)
@@ -1272,7 +1272,7 @@ def draw_slide_16(r):
 
     # Summary — below links
     r.c.setFont(MONO_FAMILY, 10); r.c.setFillColor(AMBER)
-    r.c.drawCentredString(rx + (right_w - 60) / 2, y - 12,
+    r.c.drawCentredString(rx + (right_w - 60) / 2, y + 20,
         "24 proyectos  ·  5 sustratos  ·  182 tests  ·  0 deps runtime  ·  1 disciplina")
 
     # Bottom bar
