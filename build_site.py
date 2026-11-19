@@ -236,12 +236,25 @@ S.append(dict(n=7, tag="NOX", eyebrow="06 — NOX: COGNITIVE RUNTIME", title="Pe
   <div class="card"><div class="bar" style="background:var(--cyan)"></div><h3 style="color:var(--cyan)">QUÉ LO DIFERENCIA</h3><p>La memoria de verdad persiste. Cada paso se comprueba. No llama a ningún servicio externo. Cada herramienta tiene un contrato claro. Y no vendo humo: lo que no hace, lo digo.</p></div>
 </div>'''))
 
-S.append(dict(n=8, tag="ECHO", eyebrow="07 — ECHO: COGNITIVE ORGANISM", title="Autonomous Cognitive Organism — SPECULATIVO", plain=
-    "ECHO es la versión más ambiciosa: un organismo con nueve tipos de agente, cada uno con un trabajo. La diferencia con NOX es que aquí la autonomía está pensada desde el principio. Ahora mismo es un diseño muy trabajado, pero todavía no hay código funcionando, y prefiero decirlo antes que fingir.",
+S.append(dict(n=8, tag="ECHO", eyebrow="07 — ECHO: VIDA ARTIFICIAL COMPUTACIONAL", title="Un organismo que vive en un mundo simulado", plain=
+    "ECHO no era un chatbot. Era un experimento de vida artificial: un organismo que percibe, aprende, recuerda, razona y se mueve en un mundo propio, sin que yo le diga a cada momento qué hacer. Dos referencias: ECHO en project_life (el proyecto principal) y ASTER como infraestructura independiente.",
     body='''
-<div class="col2">
-  <div class="card"><div class="bar" style="background:var(--plum)"></div><h3 style="color:var(--plum)">QUÉ ES</h3><p>Una aplicación con interfaz web y un modelo de lenguaje local. Nueve tipos de agente que observan, analizan, planean, ejecutan, validan, corrigen, sincronizan, guardan y mandan. Su memoria pesa 26 GB.</p></div>
-  <div class="card"><div class="bar" style="background:var(--amber)"></div><h3 style="color:var(--amber)">QUÉ TIENE Y QUÉ NO</h3><p>La idea de autonomía está bien pensada: quien solo mira no toca nada, quien planea solo propone. Pero la "deriva" —medir si se está desviando— está definida, no medida. Y el que manda es un único punto de fallo.</p></div>
+<div class="diag">
+  <div class="agent-grid">
+    <div class="mini" style="--c:var(--indigo)"><b>cognición</b><span>procesa, razona, decide</span></div>
+    <div class="mini" style="--c:var(--teal)"><b>memoria</b><span>guarda y recupera experiencias</span></div>
+    <div class="mini" style="--c:var(--amber)"><b>aprendizaje</b><span>se adapta con la experiencia</span></div>
+    <div class="mini" style="--c:var(--plum)"><b>ecosistema</b><span>interactúa con otros organismos</span></div>
+    <div class="mini" style="--c:var(--cyan)"><b>simulación</b><span>su propio mundo para vivir</span></div>
+    <div class="mini" style="--c:var(--green)"><b>autonomía</b><span>actúa sin instrucciones constantes</span></div>
+  </div>
+  <div class="diag-band" style="margin-top:12px">
+    <b>MODELOS + REFERENCIAS</b><p>Integración de modelos de IA para las capacidades cognitivas. Referencias: <b>~/Projects/project_life</b> (ECHO canónico) y <b>ASTER</b> (infraestructura y ecosistema independiente).</p>
+  </div>
+  <div class="diag-band green" style="margin-top:10px">
+    <b>PHASE 2.5 — VALIDACIÓN ADVERSARIA CORTA + ASIMILACIÓN ECHO/ASTER</b><p>Un prompt para que NØX: 1) descubra las capacidades legítimamente expuestas por ECHO y ASTER, 2) aprenda sus protocolos, esquemas, mensajes y respuestas, 3) las integre mediante un <b>CapabilityRegistry</b>, y 4) distinga descubrir capacidades de escalar privilegios.</p>
+  </div>
+  <p class="diag-note">En resumen: construir un organismo capaz de percibir, aprender, recordar, razonar e interactuar con un entorno propio.</p>
 </div>'''))
 
 S.append(dict(n=9, tag="ORACLE", eyebrow="08 — SINGULARITY / ORACLE", title="Multi-agente + verificación independiente", plain=
