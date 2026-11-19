@@ -252,7 +252,7 @@ S.append(dict(n=8, tag="ECHO", eyebrow="07 — ECHO: VIDA ARTIFICIAL COMPUTACION
     <b>MODELOS + REFERENCIAS</b><p>Integración de modelos de IA para las capacidades cognitivas. Referencias: <b>~/Projects/project_life</b> (ECHO canónico) y <b>ASTER</b> (infraestructura y ecosistema independiente).</p>
   </div>
   <div class="diag-band green" style="margin-top:10px">
-    <b>PHASE 2.5 — VALIDACIÓN ADVERSARIA CORTA + ASIMILACIÓN ECHO/ASTER</b><p>Un prompt para que NØX: 1) descubra las capacidades legítimamente expuestas por ECHO y ASTER, 2) aprenda sus protocolos, esquemas, mensajes y respuestas, 3) las integre mediante un <b>CapabilityRegistry</b>, y 4) distinga descubrir capacidades de escalar privilegios.</p>
+    <b>PHASE 2.5 — VALIDACIÓN ADVERSARIA CORTA + ASIMILACIÓN ECHO/ASTER</b><p>NØX descubrió las capacidades de ECHO y ASTER y adaptó su propio código para asimilarlas.</p>
   </div>
   <p class="diag-note">En resumen: construir un organismo capaz de percibir, aprender, recordar, razonar e interactuar con un entorno propio.</p>
 </div>'''))
