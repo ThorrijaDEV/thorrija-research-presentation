@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THORRIJA — Presentación para equipo de investigación IA</title>
+<style>
+:root{
+  --bg:#0b0b0d; --panel:#131317; --panel2:#17171c; --edge:#2a2a31;
+  --ink:#f2f0eb; --muted:#9a9aa6; --faint:#6a6a76;
+  --indigo:#8ea0e8; --amber:#c8944e; --teal:#5fb3ac; --plum:#a97fa2;
+  --red:#c06a5f; --green:#6abf8b; --cyan:#4ec9b0; --orange:#d49b4a;
+  --mono:'DejaVu Sans Mono',ui-monospace,monospace;
+  --sans:'DejaVu Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:var(--sans)}
+/* BASE RULES FIRST */
+.slide{width:100%;height:100%;background:var(--bg);padding:44px 56px;display:flex;flex-direction:column;position:relative}
+@media screen{
+  body{display:flex;align-items:center;justify-content:center;min-height:100vh;overflow:hidden}
+  .deck{width:1600px;height:900px;position:relative;transform-origin:center center}
+  .slide{display:none;position:absolute;inset:0}
+  .slide.active{display:flex}
+  .nav{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:99;
+    display:flex;gap:10px;align-items:center;background:#131317ee;border:1px solid var(--edge);
+    border-radius:20px;padding:6px 14px;font-family:var(--mono);font-size:12px}
+  .nav button{background:none;border:1px solid var(--edge);color:var(--ink);border-radius:12px;
+    padding:4px 12px;cursor:pointer;font-family:var(--mono);font-size:12px}
+  .nav button:hover{border-color:var(--amber);color:var(--amber)}
+  .counter{color:var(--faint)}
+}
+/* Layout helpers — grid/flexbox prevents overlap by construction */
+.eyebrow{font-family:var(--mono);font-size:13px;color:var(--indigo);letter-spacing:.08em;margin-bottom:14px;flex:none}
+h1{font-size:76px;font-weight:700;letter-spacing:-.02em}
+h2{font-size:34px;font-weight:700;line-height:1.15}
+h3{font-size:16px;font-weight:700}
+.muted{color:var(--muted)} .faint{color:var(--faint)}
+.mono{font-family:var(--mono)}
+.accent-amber{color:var(--amber)} .accent-teal{color:var(--teal)} .accent-indigo{color:var(--indigo)}
+.rule{height:2px;background:var(--edge);width:100%;flex:none}
+.rule-amber{height:3px;background:var(--amber)}
+.footer{position:absolute;bottom:30px;left:56px;right:56px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--faint)}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;flex:1;align-content:center;margin-top:22px}
+.card{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:20px;position:relative;overflow:hidden}
+.card .bar{position:absolute;top:0;left:0;width:100%;height:4px}
+.card h3{margin-bottom:12px;font-family:var(--mono)}
+.card p{font-size:14px;line-height:1.5;color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:10px}
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:28px;flex:1;align-content:center;margin-top:18px}
+.figure{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;margin-top:12px}
+.figure img{max-width:100%;max-height:100%;object-fit:contain}
+.bullets{display:flex;flex-direction:column;gap:12px}
+.bullet{display:flex;gap:12px;align-items:flex-start;font-size:15px;line-height:1.45}
+.bullet .k{color:var(--amber);font-family:var(--mono);flex:none;font-size:14px}
+table{width:100%;border-collapse:collapse;margin-top:16px;font-size:13px}
+th,td{border:1px solid var(--edge);padding:8px 10px;text-align:left}
+th{font-family:var(--mono);color:var(--ink);background:var(--panel2)}
+td{color:var(--muted)}
+code{font-family:var(--mono);font-size:13px;color:var(--muted);white-space:pre-wrap;line-height:1.5}
+.pre{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:18px;overflow:hidden}
+/* cover */
+.cover{align-items:center;justify-content:center;text-align:center;gap:26px}
+.cover h1{font-size:92px}
+.cover .sub{font-size:26px;color:var(--muted)}
+.cover .date{font-family:var(--mono);font-size:15px;color:var(--faint)}
+.cover .links{font-family:var(--mono);font-size:14px;color:var(--amber)}
+/* personal */
+.personal .cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;flex:1;margin-top:16px;min-height:0}
+.panel{border:1px solid var(--edge);border-radius:8px;background:var(--panel);padding:22px;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.panel.left{border-color:var(--amber)} .panel.right{border-color:var(--indigo)}
+.panel .vbar{position:absolute;left:0;top:0;bottom:0;width:3px}
+.panel.left .vbar{background:var(--amber)} .panel.right .vbar{background:var(--indigo)}
+.panel h3{font-family:var(--sans);font-size:20px;margin-bottom:4px}
+.panel .age{color:var(--amber);font-size:15px;font-weight:700;margin-bottom:14px}
+.handwrite p{font-size:13px;line-height:1.5;margin-bottom:8px}
+.handwrite .para{margin-bottom:14px}
+.contact-block{display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;flex:1;text-align:center}
+.contact-block .qr{width:190px;height:190px;background:#f2f0eb;border-radius:6px;padding:6px}
+.contact-block .qr img{width:100%;height:100%}
+.contact-block .cap{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.contact-block .links{font-family:var(--mono);font-size:12px;line-height:1.8}
+.contact-block .stats{font-family:var(--mono);font-size:10px;color:var(--amber);line-height:1.5;margin-top:6px}
+.bottom-quote{font-family:var(--mono);font-size:12px;color:var(--amber);text-align:center;padding:12px;border:1px solid var(--amber);border-radius:4px;background:var(--panel);flex:none}
+/* code appendix */
+.code-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px;flex:none}
+.code-cols .full{grid-column:1/-1}
+code .c{color:var(--faint)} code .kw{color:var(--indigo)} code .s{color:var(--teal)}
+/* PRINT — must come after base rules to win the cascade */
+@media print{
+  @page{size:1200pt 675pt;margin:0}
+  html,body{width:1600px;height:auto;overflow:visible}
+  html body .deck{width:1600px;height:auto;transform:none!important}
+  html body .slide{display:flex!important;position:relative;width:1600px;height:900px;
+    page-break-after:always;break-after:page;overflow:hidden}
+  html body .slide:last-child{page-break-after:auto;break-after:auto}
+  html body .nav{display:none!important}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- 1 PORTADA -->
+<section class="slide cover active">
+  <h1>THORRIJA</h1>
+  <div class="sub">Presentación para equipo de investigación IA</div>
+  <div class="date">Noviembre 2026 &nbsp;·&nbsp; Rubén Núñez Sierra</div>
+  <div class="rule rule-amber" style="width:60%"></div>
+  <div class="links">github.com/ThorrijaDEV &nbsp;·&nbsp; thorrijadev.github.io/showcase</div>
+  <div class="footer"><span>1/16</span><span>THORRIJA</span></div>
+</section>
+
+<!-- 2 TESIS -->
+<section class="slide">
+  <div class="eyebrow">01 — TESIS + FIDELIDAD</div>
+  <h2>Tres pilares, una disciplina</h2>
+  <div class="grid-3">
+    <div class="card"><div class="bar" style="background:var(--indigo)"></div>
+      <h3 class="accent-indigo">AFIRMACIÓN → EVIDENCIA → VEREDICTO</h3>
+      <p>Nada se afirma sin instrumento.<br>Nada se mide sin trazabilidad.<br>Nada se concluye sin intento de refutación.</p></div>
+    <div class="card"><div class="bar" style="background:var(--teal)"></div>
+      <h3 class="accent-teal">FIDELIDAD DECLARADA (1–4)</h3>
+      <p>1 = reproducción directa<br>2 = reconstrucción fiel<br>3 = parcial documentada<br>4 = modelo conceptual</p></div>
+    <div class="card"><div class="bar" style="background:var(--amber)"></div>
+      <h3 style="color:var(--amber)">RESULTADOS NEGATIVOS PUBLICADOS</h3>
+      <p>ORACLE E1: Δ=−0.16, p&lt;0.001<br>The Box: mecanismo explicado<br>Defectos: since_inflow, Rule.to_dict</p></div>
+  </div>
+  <div style="color:var(--faint);font-style:italic;font-size:14px;margin-top:22px">instrumento → cifra → veredicto. Cada claim lleva su nivel.</div>
+  <div class="footer"><span>2/16</span><span>TESIS</span></div>
+</section>
+
+<!-- 3 PREGUNTAS -->
+<section class="slide">
+  <div class="eyebrow">02 — PREGUNTAS + SUSTRATOS</div>
+  <h2>Cinco preguntas, tres sustratos</h2>
+  <div class="col2">
+    <div class="stack">
+      <div class="bullet"><span class="k">1.</span><span>¿Cómo verificas sin confiar en ti mismo?</span></div>
+      <div class="bullet"><span class="k">2.</span><span>¿Qué minimalismo genera estructura?</span></div>
+      <div class="bullet"><span class="k">3.</span><span>¿Cuándo la colaboración perjudica?</span></div>
+      <div class="bullet"><span class="k">4.</span><span>¿Cómo medir deriva sin ground truth?</span></div>
+      <div class="bullet"><span class="k">5.</span><span>¿Qué defectos bloquean la generalidad?</span></div>
+    </div>
+    <div class="stack">
+      <div class="card"><div class="bar" style="background:var(--indigo)"></div><h3 class="accent-indigo">THE BOX</h3><p>Sustrato generativo mínimo · 6 reglas → identidad, linaje, comunidad · Rust + TS · Nivel 3 (TS)</p></div>
+      <div class="card"><div class="bar" style="background:var(--teal)"></div><h3 class="accent-teal">SINGULARITY / ORACLE</h3><p>Multi-agente + verificación · 5 agentes + Verifier · E1 VERIFIED Δ=−0.16</p></div>
+      <div class="card"><div class="bar" style="background:var(--amber)"></div><h3 style="color:var(--amber)">HERMES</h3><p>Orquestación operacional · 9 tipos + Governor · SPECULATIVO (spec only)</p></div>
+    </div>
+  </div>
+  <div class="footer"><span>3/16</span><span>PREGUNTAS</span></div>
+</section>
+
+<!-- 4 BOX KERNEL -->
+<section class="slide">
+  <div class="eyebrow">03 — THE BOX: NÚCLEO</div>
+  <h2>Multigrafo de incidencia arco-arco</h2>
+  <div class="figure"><img src="assets/slide_04_box_kernel.png" alt="Kernel de The Box"></div>
+  <div class="footer"><span>4/16</span><span>KERNEL</span></div>
+</section>
+
+<!-- 5 BOX RULES -->
+<section class="slide">
+  <div class="eyebrow">04 — THE BOX: 6 REGLAS</div>
+  <h2>Ninguna menciona identidad, linaje o comunidad. Emergen.</h2>
+  <div class="figure"><img src="assets/slide_05_box_rules.png" alt="Seis reglas de The Box"></div>
+  <div class="footer"><span>5/16</span><span>REGLAS</span></div>
+</section>
+
+<!-- 6 BOX EXP -->
+<section class="slide">
+  <div class="eyebrow">05 — THE BOX: EXPERIMENTOS + TS + LÍMITES</div>
+  <h2>Un hallazgo admitido, dos defectos, puerto TS nivel 3</h2>
+  <div class="figure"><img src="assets/slide_06_box_experiments.png" alt="Experimentos de The Box"></div>
+  <div class="footer"><span>6/16</span><span>EXP + TS</span></div>
+</section>
+
+<!-- 7 NOX -->
+<section class="slide">
+  <div class="eyebrow">06 — NOX: COGNITIVE RUNTIME</div>
+  <h2>Persistent Autonomous Cognitive Runtime</h2>
+  <div class="col2">
+    <div class="card"><div class="bar" style="background:var(--indigo)"></div>
+      <h3 class="accent-indigo">ARQUITECTURA PERSISTENTE</h3>
+      <p>Loop cognitivo: percibir → razonar → actuar → consolidar<br>Memoria episódica: SQLite + vector store (embeddings locales)<br>Herramientas: código, web, terminal, sistema de archivos<br>Modelos: 20 GB (GGUF local vía Ollama)<br>Verificación: property tests + trace hashing + replay<br>Estado: ACTIVO · nox-cognitive-runtime</p></div>
+    <div class="card"><div class="bar" style="background:var(--cyan)"></div>
+      <h3 style="color:var(--cyan)">DIFERENCIADORES</h3>
+      <p>Persistencia real (estado sobrevive reinicios)<br>Verificación integrada en cada ciclo (blake3)<br>Modelos locales: zero API calls, zero telemetría<br>Herramientas puras con contrato tipado (JSON Schema)<br>Reproducibilidad: semillas fijas + hash de traza<br>Sin 'AGI' marketing: fidelidad declarada</p></div>
+  </div>
+  <div class="footer"><span>7/16</span><span>NOX</span></div>
+</section>
+
+<!-- 8 ECHO -->
+<section class="slide">
+  <div class="eyebrow">07 — ECHO: COGNITIVE ORGANISM</div>
+  <h2>Autonomous Cognitive Organism — SPECULATIVO</h2>
+  <div class="col2">
+    <div class="card"><div class="bar" style="background:var(--plum)"></div>
+      <h3 style="color:var(--plum)">ESPECIFICACIÓN TÉCNICA</h3>
+      <p>Stack: FastAPI + React + WebSockets + Ollama<br>Memoria: 26 GB (GGUF merged + safetensors + datasets)<br>Herramientas: código, web, terminal, FS, planificador<br>Ciclo: spawn → plan → execute → verify → consolidate → sleep<br>Autonomía: 9 tipos de agente (Observer → Governor)<br>Repo: echo-cognitive-organism · project_life/echo</p></div>
+    <div class="card"><div class="bar" style="background:var(--amber)"></div>
+      <h3 style="color:var(--amber)">9 TIPOS DE AGENTE</h3>
+      <p>Observer · Analyzer · Planner · Executor · Validator<br>Corrector · Synchronizer · Archivist · Governor</p>
+      <p style="margin-top:14px">drift_semántico = distancia(intención, efecto) — NO validado<br>Governor = SPOF documentado<br>Intervención automática: drift &gt; θ → Corrector<br>Valor: pensamiento riguroso antes de código<br>Riesgo: spec hermética que no sobreviva implementación</p></div>
+  </div>
+  <div class="footer"><span>8/16</span><span>ECHO</span></div>
+</section>
+
+<!-- 9 SINGULARITY -->
+<section class="slide">
+  <div class="eyebrow">08 — SINGULARITY / ORACLE</div>
+  <h2>Multi-agente + verificación independiente</h2>
+  <div class="figure"><img src="assets/slide_09_singularity.png" alt="Arquitectura SINGULARITY"></div>
+  <div class="footer"><span>9/16</span><span>ORACLE</span></div>
+</section>
+
+<!-- 10 HERMES -->
+<section class="slide">
+  <div class="eyebrow">09 — HERMES</div>
+  <h2>9 tipos de agente · autonomía por diseño</h2>
+  <div class="figure"><img src="assets/slide_10_hermes.png" alt="Arquitectura HERMES"></div>
+  <div class="footer"><span>10/16</span><span>HERMES</span></div>
+</section>
+
+<!-- 11 SHOWCASE -->
+<section class="slide">
+  <div class="eyebrow">10 — SHOWCASE: 4 MODELOS NIVEL 1</div>
+  <h2>Cuatro reconstrucciones ejecutables</h2>
+  <div class="figure"><img src="assets/slide_11_showcase.png" alt="Showcase modelos"></div>
+  <div class="footer"><span>11/16</span><span>SHOWCASE</span></div>
+</section>
+
+<!-- 12 SINTESIS -->
+<section class="slide">
+  <div class="eyebrow">11 — SÍNTESIS: 5 SUSTRATOS</div>
+  <h2>Una disciplina de verificación</h2>
+  <div class="stack" style="margin-top:20px">
+    <div class="card"><div class="bar" style="background:var(--amber)"></div>
+      <h3 style="color:var(--amber)">PRIMITIVA DE VERIFICACIÓN (7 CAPAS)</h3>
+      <p>Spec ejecutable · Property tests · Verificador independiente · Reproducibilidad (semillas+hash+bootstrap) · Fidelidad declarada · Negativos publicados · Defectos documentados</p></div>
+    <div class="card"><div class="bar" style="background:var(--indigo)"></div>
+      <h3 class="accent-indigo">HILO COMÚN</h3>
+      <p>Verificación independiente · Fidelidad declarada · Resultados negativos publicados · Defectos documentados — en los cinco sustratos: The Box, NOX, ECHO, SINGULARITY/ORACLE, HERMES</p></div>
+    <div class="card"><div class="bar" style="background:var(--teal)"></div>
+      <h3 class="accent-teal">NEGATIVO ≠ FALLO — NEGATIVO = LÍMITE MEDIDO</h3>
+      <p>ORACLE E1: colaboración perjudica · The Box: mecanismo explicado sin descubrimiento · Defectos documentados para no repetir</p></div>
+  </div>
+  <div class="footer"><span>12/16</span><span>SÍNTESIS</span></div>
+</section>
+
+<!-- 13 HEATMAP -->
+<section class="slide">
+  <div class="eyebrow">12 — MAPA DE LIMITACIONES + PROBLEMAS ABIERTOS</div>
+  <h2>Intensidad por sustrato, con criterio de falsificación</h2>
+  <table>
+    <tr><th>Dimensión</th><th>The Box</th><th>NOX</th><th>ECHO</th><th>ORACLE</th><th>HERMES</th></tr>
+    <tr><td>Defectos estructurales</td><td style="color:var(--red)">bloquea</td><td>doc</td><td>doc</td><td>doc</td><td>—</td></tr>
+    <tr><td>Sin hardware</td><td style="color:var(--red)">bloquea</td><td style="color:var(--amber)">alcance</td><td style="color:var(--red)">bloquea</td><td style="color:var(--amber)">alcance</td><td style="color:var(--amber)">alcance</td></tr>
+    <tr><td>Sin aprendizaje</td><td style="color:var(--red)">bloquea</td><td>doc</td><td style="color:var(--amber)">alcance</td><td>doc</td><td>doc</td></tr>
+    <tr><td>Sin baseline externo</td><td style="color:var(--red)">bloquea</td><td>doc</td><td style="color:var(--amber)">alcance</td><td style="color:var(--amber)">alcance</td><td style="color:var(--amber)">alcance</td></tr>
+    <tr><td>Serialización incompleta</td><td style="color:var(--red)">bloquea</td><td>—</td><td>doc</td><td>doc</td><td>—</td></tr>
+    <tr><td>Verificación no exhaustiva</td><td>doc</td><td style="color:var(--amber)">alcance</td><td style="color:var(--amber)">alcance</td><td style="color:var(--amber)">alcance</td><td style="color:var(--amber)">alcance</td></tr>
+    <tr><td>Spec no implementada</td><td>—</td><td>—</td><td style="color:var(--red)">bloquea</td><td>—</td><td style="color:var(--red)">bloquea</td></tr>
+    <tr><td>Métricas deriva no validadas</td><td>—</td><td>doc</td><td style="color:var(--amber)">alcance</td><td style="color:var(--amber)">alcance</td><td style="color:var(--amber)">alcance</td></tr>
+  </table>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px">
+    <div class="card"><h3 class="accent-indigo">P1 Generalidad The Box</h3><p>Resolver since_inflow + Rule.to_dict → ¿composición recursiva?</p></div>
+    <div class="card"><h3 class="accent-teal">P2 Colaboración efectiva</h3><p>E1: overhead &gt; ganancia → ¿topologías que inviertan?</p></div>
+    <div class="card"><h3 style="color:var(--amber)">P3 Verificación emergente</h3><p>Estructural → semántica (identidad/linaje)</p></div>
+    <div class="card"><h3 style="color:var(--plum)">P4 Sim → Hardware</h3><p>¿Interfaz sensor/actuador que preserve determinismo?</p></div>
+    <div class="card"><h3 style="color:var(--red)">P5 Deriva HERMES</h3><p>Drift sin ground truth → ¿cómo medir?</p></div>
+    <div class="card"><h3 class="faint">P6 Cross-language repro</h3><p>Rust↔TS estructura OK, hashes divergen → ¿nivel 2?</p></div>
+  </div>
+  <div class="footer"><span>13/16</span><span>HEATMAP</span></div>
+</section>
+
+<!-- 14 REPRO + CTA -->
+<section class="slide">
+  <div class="eyebrow">13 — REPRODUCIBILIDAD + CONTRATO + CTA</div>
+  <h2>Comandos, contrato y formas de trabajar</h2>
+  <div class="col2">
+    <div class="pre"><code>cargo test --package the-box
+npm test &amp;&amp; npm run build
+pytest experiments/e1_negative.py --bootstrap 10000
+cargo test --workspace
+cat hermes/SPEC.md</code>
+      <p style="margin-top:12px;color:var(--amber);font-size:13px">LO QUE PIDO: gente que exija más rigor del que tengo hoy.</p>
+      <p style="color:var(--faint);font-size:12px">NO traigo credenciales inventadas ni métricas infladas.</p></div>
+    <div class="stack">
+      <div class="card"><div class="bar" style="background:var(--green)"></div><h3 style="color:var(--green)">1 · Resolver P1 (The Box)</h3><p>since_inflow + Rule.to_dict → generalidad · PL theory, type systems, formal verification</p></div>
+      <div class="card"><div class="bar" style="background:var(--teal)"></div><h3 class="accent-teal">2 · Invertir E1 (ORACLE)</h3><p>topologías donde colaboración &gt; aislamiento · multi-agent, comm protocols, exp design</p></div>
+      <div class="card"><div class="bar" style="background:var(--amber)"></div><h3 style="color:var(--amber)">3 · Implementar HERMES</h3><p>de SPECULATIVO a VERIFIED · distributed systems, observability, correctness</p></div>
+      <div class="card"><div class="bar" style="background:var(--indigo)"></div><h3 class="accent-indigo">4 · Versión web (ROADMAP)</h3><p>Esta presentación como sitio web interactivo — generado automáticamente desde la misma fuente</p></div>
+    </div>
+  </div>
+  <div class="footer"><span>14/16</span><span>REPRO + CTA</span></div>
+</section>
+
+<!-- 15 APENDICE -->
+<section class="slide">
+  <div class="eyebrow">14 — APÉNDICE: CÓDIGO + STATS</div>
+  <h2>Artefactos técnicos</h2>
+  <div class="figure"><img src="assets/slide_15_appendix.png" alt="Apéndice técnico"></div>
+  <div class="footer"><span>15/16</span><span>APÉNDICE</span></div>
+</section>
+
+<!-- 16 PERSONAL -->
+<section class="slide personal">
+  <div class="eyebrow">15 — QUIÉN SOY</div>
+  <div class="cols">
+    <div class="panel left">
+      <div class="vbar"></div>
+      <h3>Rubén Núñez Sierra</h3>
+      <div class="age">15 años</div>
+      <div class="handwrite">
+        <p>No destaco por mis notas.</p>
+        <p>No soy popular.</p>
+        <div class="para"></div>
+        <p>Simplemente me considero un adolescente<br>bastante ambicioso que quiere aprender<br>de mucha gente.</p>
+        <div class="para"></div>
+        <p>Lo que ves aquí — The Box, NOX, ECHO,<br>SINGULARITY, HERMES, el Showcase —<br>no es 'deberes'. Es lo que construyo<br>cuando nadie me obliga.</p>
+        <div class="para"></div>
+        <p>Mi disciplina es simple:<br>si no se puede ejecutar, medir y repetir,<br>no existe.</p>
+        <div class="para"></div>
+        <p>Los defectos los documento.<br>Los negativos los publico.<br>La fidelidad la declaro.</p>
+        <div class="para"></div>
+        <p>Busco gente que exija más rigor<br>del que yo tengo hoy.</p>
+        <div class="para"></div>
+        <p>Gracias por leer hasta aquí.</p>
+      </div>
+    </div>
+    <div class="panel right">
+      <div class="vbar"></div>
+      <h3 class="accent-indigo">CONTACTO + ARTEFACTOS</h3>
+      <div class="contact-block">
+        <div class="qr"><img src="assets/qr.png" alt="QR a github.com/ThorrijaDEV"></div>
+        <div class="cap">Escanea → github.com/ThorrijaDEV</div>
+        <div class="links">
+          <div>github.com/ThorrijaDEV</div>
+          <div>thorrijadev.github.io/showcase</div>
+          <div>thorrijadev.github.io/Portafolio/</div>
+          <div>thorrija.contact@gmail.com</div>
+        </div>
+        <div class="stats">24 proyectos · 5 sustratos · 182 tests<br>0 deps runtime · 1 disciplina</div>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-quote">"No me creas. Ejecuta el código." · Fidelidad declarada · Defectos documentados · Negativos versionados</div>
+  <div class="footer"><span>16/16</span><span>PERSONAL</span></div>
+</section>
+
+</div>
+
+<div class="nav" id="nav">
+  <button id="prev">◀</button>
+  <span class="counter" id="counter">1 / 16</span>
+  <button id="next">▶</button>
+</div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  const counter=document.getElementById('counter');
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    counter.textContent=(i+1)+' / '+slides.length;
+    // update hash without triggering navigation (safe on file:// and http)
+    try{ if(location.hash!=='#'+(i+1)) history.replaceState(null,'',location.pathname+'#'+(i+1)); }catch(e){}
+    window.scrollTo(0,0);
+  }
+  document.getElementById('prev').onclick=()=>show(i-1);
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();show(i+1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();show(i-1)}
+    if(e.key==='Home')show(0); if(e.key==='End')show(slides.length-1);
+  });
+  const h=parseInt(location.hash.slice(1),10);
+  show(isNaN(h)?0:h-1);
+  // scale the fixed 1600x900 deck to fit any viewport
+  function fit(){
+    const d=document.getElementById('deck');
+    const s=Math.min(window.innerWidth/1600, window.innerHeight/900);
+    d.style.transform='scale('+s+')';
+  }
+  window.addEventListener('resize',fit); fit();
+  // touch swipe
+  let sx=0;
+  document.addEventListener('touchstart',e=>sx=e.changedTouches[0].screenX,{passive:true});
+  document.addEventListener('touchend',e=>{const d=e.changedTouches[0].screenX-sx;if(d>60)show(i-1);if(d<-60)show(i+1)},{passive:true});
+})();
+</script>
+</body>
+</html>
