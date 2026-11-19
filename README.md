@@ -8,10 +8,20 @@
 
 | Archivo | Descripción |
 |---|---|
-| `docs/index.html` | **Fuente única** — versión web interactiva (GitHub Pages) + fuente del PDF |
-| `docs/assets/` | Diagramas + QR (dark on light, escaneable) |
-| `Thorrija_16p_Web.pdf` | **PDF final** — generado automáticamente desde `web/index.html` |
-| `build_pdf.sh` | Script que regenera el PDF desde el HTML |
+| `build_site.py` | **Fuente de datos** — las 16 slides con título, diagramas HTML y texto en lenguaje sencillo |
+| `docs/index.html` | Generado por `build_site.py` — versión web (GitHub Pages) + fuente del PDF |
+| `docs/assets/` | Solo el QR (los diagramas ahora son HTML nativo, sin imágenes que se solapen) |
+| `Thorrija_16p_Web.pdf` | **PDF final** — 16 páginas, generado automáticamente |
+| `build_pdf.sh` | Regenera PDF desde `docs/index.html` |
+
+## Regenerar todo (automático)
+
+```bash
+python3 build_site.py   # datos → docs/index.html
+./build_pdf.sh          # docs/index.html → Thorrija_16p_Web.pdf
+```
+
+Cada slide incluye un bloque **"CÓMO EXPLICARLO — EN PALABRAS SENCILLAS"**: texto normal, sin tecnicismo, para que puedas explicarlo oralmente sin memorizar un guion técnico.
 | `narrative/` | SLIDE_BLUEPRINT.md, SPEAKER_NOTES.md, QA_INDEX.md |
 | `legacy/` | Generadores Python/matplotlib anteriores (referencia) |
 
