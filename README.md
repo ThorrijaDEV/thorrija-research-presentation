@@ -8,8 +8,8 @@
 
 | Archivo | Descripción |
 |---|---|
-| `web/index.html` | **Fuente única** — versión web interactiva + fuente del PDF |
-| `web/assets/` | Diagramas + QR (dark on light, escaneable) |
+| `docs/index.html` | **Fuente única** — versión web interactiva (GitHub Pages) + fuente del PDF |
+| `docs/assets/` | Diagramas + QR (dark on light, escaneable) |
 | `Thorrija_16p_Web.pdf` | **PDF final** — generado automáticamente desde `web/index.html` |
 | `build_pdf.sh` | Script que regenera el PDF desde el HTML |
 | `narrative/` | SLIDE_BLUEPRINT.md, SPEAKER_NOTES.md, QA_INDEX.md |
@@ -31,7 +31,7 @@
 ./build_pdf.sh
 ```
 
-Requiere `chromium`. El script imprime `web/index.html` a PDF con `@page 1200pt×675pt`, exactamente 16 páginas 16:9.
+Requiere `chromium`. El script imprime `docs/index.html` a PDF con `@page 1200pt×675pt`, exactamente 16 páginas 16:9.
 
 ## Cómo funciona
 
