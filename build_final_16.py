@@ -1248,31 +1248,29 @@ def draw_slide_16(r):
 
     rx = right_x + 30
     qr_size = 180
-    qr_y = 260
+    qr_y = 300
     qr_x = rx + (right_w - qr_size) / 2
 
-    # Title — above the QR
+    # Title at top of the right panel
     r.c.setFont(SANS_BOLD, 16); r.c.setFillColor(INDIGO)
-    r.c.drawString(rx, qr_y + qr_size + 30, "CONTACTO + ARTEFACTOS")
+    r.c.drawString(rx, r.h - MARGIN - 40, "CONTACTO + ARTEFACTOS")
 
     # QR code
     r.c.drawImage(QR_PATH, qr_x, qr_y, width=qr_size, height=qr_size, mask='auto')
     r.c.setFont(MONO_FAMILY, 9); r.c.setFillColor(FAINT)
-    r.c.drawCentredString(qr_x + qr_size / 2, qr_y + qr_size + 12,
+    r.c.drawCentredString(qr_x + qr_size / 2, qr_y + qr_size + 8,
                           "Escanea → github.com/ThorrijaDEV")
 
-    # Links — below QR
+    # Links below QR
     links = ["github.com/ThorrijaDEV", "thorrijadev.github.io/showcase",
              "thorrija.contact@gmail.com"]
-    y = qr_y + qr_size + 40
     r.c.setFont(MONO_FAMILY, 11); r.c.setFillColor(INK)
-    for link in links:
-        r.c.drawString(rx, y, link)
-        y -= 22
+    for i, link in enumerate(links):
+        r.c.drawString(rx, qr_y + qr_size + 40 + i * 20, link)
 
-    # Summary — below links
+    # Summary — below the last link (y≈620 for the 6th link at i=5 → links reach ~620)
     r.c.setFont(MONO_FAMILY, 10); r.c.setFillColor(AMBER)
-    r.c.drawCentredString(rx + (right_w - 60) / 2, y + 20,
+    r.c.drawCentredString(rx + (right_w - 60) / 2, qr_y + qr_size + 145,
         "24 proyectos  ·  5 sustratos  ·  182 tests  ·  0 deps runtime  ·  1 disciplina")
 
     # Bottom bar
