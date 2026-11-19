@@ -1190,52 +1190,91 @@ def draw_slide_15(r):
 
 def draw_slide_16(r):
     r.bg()
-    # Left panel
+    left_w = r.w * 0.48
+    right_x = MARGIN + left_w + 20  # 20px gap so the panels never overlap
+    right_w = r.w - right_x - MARGIN
+
+    # ── LEFT PANEL (Rubén, handwritten) ─────────────────────────────────────
     r.c.setFillColor(PANEL); r.c.setStrokeColor(AMBER); r.c.setLineWidth(1)
-    r.c.roundRect(MARGIN, MARGIN + 20, r.w*0.48, r.h - 2*MARGIN - 40, 8, fill=1, stroke=1)
+    r.c.roundRect(MARGIN, MARGIN + 20, left_w, r.h - 2*MARGIN - 40, 8, fill=1, stroke=1)
     r.c.setFillColor(AMBER); r.c.rect(MARGIN, MARGIN + 20, 3, r.h - 2*MARGIN - 40, fill=1, stroke=0)
-    # Right panel
-    r.c.setFillColor(PANEL); r.c.setStrokeColor(INDIGO); r.c.setLineWidth(1)
-    r.c.roundRect(r.w/2 + 10, MARGIN + 20, r.w*0.48, r.h - 2*MARGIN - 40, 8, fill=1, stroke=1)
-    r.c.setFillColor(INDIGO); r.c.rect(r.w/2 + 10, MARGIN + 20, 3, r.h - 2*MARGIN - 40, fill=1, stroke=0)
-    # Left: handwritten
+
+    # Header
     r.c.setFont(SANS_BOLD, 20); r.c.setFillColor(INK)
-    r.c.drawString(MARGIN + 20, r.h - MARGIN - 40, "Rubén Núñez Sierra")
+    r.c.drawString(MARGIN + 20, r.h - MARGIN - 80, "Rubén Núñez Sierra")
     r.c.setFont(SANS_FAMILY, 16); r.c.setFillColor(AMBER)
-    r.c.drawString(MARGIN + 20, r.h - MARGIN - 70, "15 años")
+    r.c.drawString(MARGIN + 20, r.h - MARGIN - 110, "15 años")
+
+    # Handwritten narrative — occupies the BOTTOM of the left panel, spanning
+    # roughly y∈[450, 860]. The QR lives in the right panel at y∈[260, 440],
+    # so the two regions are vertically offset with a ~210px vertical gap
+    # (y=440..450) AND at completely different x — nothing can overlap.
     handwritten = [
-        "No destaco por mis notas.", "No soy popular.", "",
-        "Simplemente me considero un adolescente", "bastante ambicioso que quiere aprender", "de mucha gente.", "",
-        "Lo que ves aquí — The Box, NOX, ECHO,", "SINGULARITY, HERMES, el Showcase —", "no es 'deberes'. Es lo que construyo", "cuando nadie me obliga.", "",
-        "Mi disciplina es simple:", "si no se puede ejecutar, medir y repetir,", "no existe.", "",
-        "Los defectos los documento.", "Los negativos los publico.", "La fidelidad la declaro.", "",
-        "Busco gente que exija más rigor", "del que yo tengo hoy.", "",
-        "Gracias por leer hasta aquí."
+        "No destaco por mis notas.",
+        "No soy popular.",
+        "",
+        "Simplemente me considero un adolescente",
+        "bastante ambicioso que quiere aprender",
+        "de mucha gente.",
+        "",
+        "Lo que ves aquí — The Box, NOX, ECHO,",
+        "SINGULARITY, HERMES, el Showcase —",
+        "no es 'deberes'. Es lo que construyo",
+        "cuando nadie me obliga.",
+        "",
+        "Mi disciplina es simple:",
+        "si no se puede ejecutar, medir y repetir,",
+        "no existe.",
+        "",
+        "Los defectos los documento.",
+        "Los negativos los publico.",
+        "La fidelidad la declaro.",
+        "",
+        "Busco gente que exija más rigor",
+        "del que yo tengo hoy.",
+        "",
+        "Gracias por leer hasta aquí.",
     ]
-    y_pos = r.h - MARGIN - 100
+    y = 860.0  # 23 lines * 18.5 ≈ 425px tall → spans ~[435, 860]
     r.c.setFont(SANS_FAMILY, 12); r.c.setFillColor(INK)
     for line in handwritten:
-        r.c.drawString(MARGIN + 20, y_pos, line)
-        y_pos -= 18
-    # Right panel
-    r.c.setFont(SANS_BOLD, 16); r.c.setFillColor(INDIGO)
-    r.c.drawString(r.w/2 + 30, r.h - MARGIN - 40, "CONTACTO + ARTEFACTOS")
-    from PIL import Image
+        r.c.drawString(MARGIN + 20, y, line)
+        y -= 18.5
+
+    # ── RIGHT PANEL (QR + links + summary) ───────────────────────────────────
+    r.c.setFillColor(PANEL); r.c.setStrokeColor(INDIGO); r.c.setLineWidth(1)
+    r.c.roundRect(right_x, MARGIN + 20, right_w, r.h - 2*MARGIN - 40, 8, fill=1, stroke=1)
+    r.c.setFillColor(INDIGO); r.c.rect(right_x, MARGIN + 20, 3, r.h - 2*MARGIN - 40, fill=1, stroke=0)
+
+    rx = right_x + 30
     qr_size = 180
-    qr_x = r.w/2 + 30 + (r.w*0.48 - qr_size) / 2
-    qr_y = r.h - MARGIN - 80 - qr_size
+    qr_y = 260
+    qr_x = rx + (right_w - qr_size) / 2
+
+    # Title — above the QR
+    r.c.setFont(SANS_BOLD, 16); r.c.setFillColor(INDIGO)
+    r.c.drawString(rx, qr_y + qr_size + 30, "CONTACTO + ARTEFACTOS")
+
+    # QR code
     r.c.drawImage(QR_PATH, qr_x, qr_y, width=qr_size, height=qr_size, mask='auto')
     r.c.setFont(MONO_FAMILY, 9); r.c.setFillColor(FAINT)
-    r.c.drawCentredString(qr_x + qr_size/2, qr_y - 15, "Escanea → github.com/ThorrijaDEV")
-    links = ["github.com/ThorrijaDEV", "thorrijadev.github.io/showcase", "thorrija.contact@gmail.com"]
-    y_links = qr_y - 30
+    r.c.drawCentredString(qr_x + qr_size / 2, qr_y + qr_size + 12,
+                          "Escanea → github.com/ThorrijaDEV")
+
+    # Links — below QR
+    links = ["github.com/ThorrijaDEV", "thorrijadev.github.io/showcase",
+             "thorrija.contact@gmail.com"]
+    y = qr_y + qr_size + 30
     r.c.setFont(MONO_FAMILY, 11); r.c.setFillColor(INK)
     for link in links:
-        r.c.drawString(r.w/2 + 30, y_links, link)
-        y_links -= 22
+        r.c.drawString(rx, y, link)
+        y -= 22
+
+    # Summary — below links
     r.c.setFont(MONO_FAMILY, 10); r.c.setFillColor(AMBER)
-    r.c.drawCentredString(r.w/2 + 30 + r.w*0.24, y_links - 10,
+    r.c.drawCentredString(rx + (right_w - 60) / 2, y - 12,
         "24 proyectos  ·  5 sustratos  ·  182 tests  ·  0 deps runtime  ·  1 disciplina")
+
     # Bottom bar
     r.c.setFillColor(PANEL); r.c.setStrokeColor(AMBER); r.c.setLineWidth(1.5)
     r.c.roundRect(MARGIN, MARGIN/2, r.w - 2*MARGIN, 30, 4, fill=1, stroke=1)
